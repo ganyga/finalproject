@@ -19,7 +19,7 @@ pipeline {
         stage('Deploy Nginx') {
             steps {
                 sh "${KUBECTL_PATH} apply -f nginx.yaml"
-                sh "IP=$(kubectl get services/nginx -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+                sh "IP=\$(kubectl get services/nginx -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
                 sh "curl -s ${IP}"
             }
         }
