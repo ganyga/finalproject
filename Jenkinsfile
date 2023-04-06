@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    
+     environment {
+        KUBECTL_PATH = "/usr/local/bin/kubectl" // kubectl 실행 파일의 경로
+    }
+    
     stages {
         stage('Clone Git repository') {
             steps {
@@ -13,7 +18,7 @@ pipeline {
         }
         stage('Deploy Nginx') {
             steps {
-                sh "kubectl apply -f nginx.yaml"
+                sh "${KUBECTL_PATH} apply -f nginx.yaml"
                 // ...
             }
         }
