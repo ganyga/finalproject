@@ -4,7 +4,7 @@ pipeline {
         stage('Clone Git repository') {
             steps {
                 checkout([$class: 'GitSCM',
-                          branches: [[name: 'master']],
+                          branches: [[name: 'main']],
                           doGenerateSubmoduleConfigurations: false,
                           extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: false]],
                           submoduleCfg: [],
