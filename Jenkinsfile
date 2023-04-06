@@ -2,7 +2,7 @@ pipeline {
     agent any
     
      environment {
-        KUBECTL_PATH = "/usr/local/bin/kubectl" // kubectl 실행 파일의 경로
+        KUBECTL_PATH = "C:\Users\user\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\kubectl" // kubectl 실행 파일의 경로
     }
     
     stages {
