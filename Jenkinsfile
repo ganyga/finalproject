@@ -1,7 +1,7 @@
 pipeline {
     agent any
     
-     environment {
+    environment {
         KUBECTL_PATH = "C:/Users/user/kubectl" // kubectl 실행 파일의 경로
     }
     
@@ -19,9 +19,9 @@ pipeline {
         stage('Deploy Nginx') {
             steps {
                 sh "${KUBECTL_PATH} apply -f nginx.yaml"
-                // ...
+                sh "IP=$(kubectl get services/nginx -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+                sh "curl -s $IP"
             }
         }
-        // ...
     }
 }
