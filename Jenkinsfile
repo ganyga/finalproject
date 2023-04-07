@@ -1,27 +1,27 @@
 pipeline {
-  agent any
-  stages {
-    stage('git scm update') {
-      steps {
-        git url: 'https://github.com/ganyga/jen', branch: 'main'
-      }
+    agent any
+    environment {
+        KUBECONFIG = credentials('kubeconfig')
+        IMAGE_NAME = 'gaeunoo/nginx-example'
+        APP_NAME = 'nginx-example'
+        NAMESPACE = 'default'
     }
-    stage('docker build') {
-      steps {
-        sh '''
-        docker build -t gaeunoo/my-nginx . 
-        sudo docker push rapa.iptime.org:5000/mynginx:gany
-        '''
-      }
+    stages {
+        stage('Build and Push Docker Image') {
+            steps {
+                script {
+                    def app = docker.build(IMAGE_NAME)
+                    app.push()
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh '''
+                    kubectl config use-context kubernetes
+                    kubectl set image deployment/${APP_NAME} ${APP_NAME}=${IMAGE_NAME} -n ${NAMESPACE}
+                '''
+            }
+        }
     }
-    
-    stage('deploy k8s') {
-      steps {
-        sh '''
-        sudo kubectl apply -f test.yml
-        '''
-      }
-    }
-    
-  }
 }
