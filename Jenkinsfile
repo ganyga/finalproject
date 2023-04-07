@@ -1,10 +1,28 @@
 pipeline {
   agent any
+  
+    environment {
+    gitName = 'gany'
+    gitEmail = 'artzana03@gmail.com'
+    gitWebaddress = 'https://github.com/ganyga/finalproject.git'
+    gitCredential = 'git_cre' // github credential 생성 시의 ID
+    dockerHubRegistry = 'gaeunoo/nginx'
+    dockerHubRegistryCredential = 'docker_cre'
+    }
+  
   stages {
-    stage('git scm update') {
+    stage('checkout Github') {
       steps {
-        git url: 'https://github.com/ganyga/finalproject.git', branch: 'main'
-      }
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: gitCredential, url: gitWebaddress]]])
+        }
+        post {
+            failure {
+                echo 'Repository clone failure'
+            }
+            success {
+                echo 'Repository clone success'
+            }
+        }
     }
     stage('docker build') {
       steps {
