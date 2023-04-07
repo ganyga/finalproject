@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('git scm update') {
       steps {
-        git url: 'https://github.com/ganyga/jen', branch: 'main'
+        git url: 'https://github.com/ganyga/finalproject.git', branch: 'main'
       }
     }
     
