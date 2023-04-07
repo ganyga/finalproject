@@ -3,14 +3,14 @@ pipeline {
   stages {
     stage('git scm update') {
       steps {
-        git url: 'https://github.com/ganyga/jen', branch: 'main'
+        git url: 'https://github.com/ganyga/finalproject.git', branch: 'main'
       }
     }
     stage('docker build') {
       steps {
         sh '''
-        sudo docker build -t rapa.iptime.org:5000/mynginx:gany .
-        sudo docker push rapa.iptime.org:5000/mynginx:gany
+        sudo docker build -t gaeunoo/nginx:gany .
+        sudo docker push gaeunoo/nginx:gany
         '''
       }
     }
