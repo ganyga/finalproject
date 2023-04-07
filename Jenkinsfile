@@ -1,27 +1,27 @@
 pipeline {
-    agent any
-    
-    environment {
-        KUBECTL_PATH = "C:/Users/user/kubectl" // kubectl 실행 파일의 경로
+  agent any
+  stages {
+    stage('git scm update') {
+      steps {
+        git url: 'https://github.com/ganyga/jen', branch: 'main'
+      }
+    }
+    stage('docker build') {
+      steps {
+        sh '''
+        sudo docker build -t rapa.iptime.org:5000/mynginx:gany .
+        sudo docker push rapa.iptime.org:5000/mynginx:gany
+        '''
+      }
     }
     
-    stages {
-        stage('Clone Git repository') {
-            steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: 'main']],
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: true, recursiveSubmodules: true, reference: '', trackingSubmodules: false]],
-                          submoduleCfg: [],
-                          userRemoteConfigs: [[url: 'https://github.com/ganyga/finalproject.git']]])
-            }
-        }
-        stage('Deploy Nginx') {
-            steps {
-                sh "${KUBECTL_PATH} apply -f nginx.yaml"
-                sh "IP=\$(kubectl get services/nginx -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
-                sh "curl -s ${IP}"
-            }
-        }
+    stage('deploy k8s') {
+      steps {
+        sh '''
+        sudo kubectl apply -f test.yml
+        '''
+      }
     }
+    
+  }
 }
