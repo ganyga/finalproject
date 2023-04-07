@@ -9,7 +9,7 @@ pipeline {
     stage('docker build') {
       steps {
         sh '''
-        sudo docker build -t rapa.iptime.org:5000/mynginx:gany .
+        docker build -t gaeunoo/my-nginx . 
         sudo docker push rapa.iptime.org:5000/mynginx:gany
         '''
       }
