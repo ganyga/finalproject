@@ -11,19 +11,12 @@ pipeline {
     }
   
   stages {
-    stage('checkout Github') {
+    stage('git scm update') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: gitCredential, url: gitWebaddress]]])
-        }
-        post {
-            failure {
-                echo 'Repository clone failure'
-            }
-            success {
-                echo 'Repository clone success'
-            }
-        }
+        git url: 'https://github.com/ganyga/jen', branch: 'main'
+      }
     }
+    
     stage('docker build') {
       steps {
         sh '''
