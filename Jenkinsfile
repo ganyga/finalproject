@@ -20,8 +20,8 @@ pipeline {
     stage('docker build') {
       steps {
         sh '''
-        sudo docker build -t gaeunoo/nginx:gany .
-        sudo docker push gaeunoo/nginx:gany
+          docker build -t gaeunoo/nginx:gany .
+          docker push gaeunoo/nginx:gany
         '''
       }
     }
