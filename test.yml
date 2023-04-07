@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: container
-          image: gaeunoo/nginx:latest
+          image: gaeunoo/nginx:14
 ---
 apiVersion: v1
 kind: Service
