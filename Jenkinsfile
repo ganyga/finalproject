@@ -6,6 +6,7 @@ pipeline {
     gitEmail = 'artzana03@gmail.com'
     gitWebaddress = 'https://github.com/ganyga/finalproject.git'
     gitCredential = 'git_cre'
+    GITDEPADD = 'git@github.com:ganyga/finalproject.git'
     dockerHubRegistry = 'gaeunoo/nginx'
     dockerHubRegistryCredential = 'docker_cre'
   }
@@ -76,6 +77,7 @@ pipeline {
         sh "git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
         sh "git branch -M main"
         sh "git remote remove origin"
+        sh "git remote add origin ${GITDEPADD}"
         sh "git push -u origin main"
 
       }
