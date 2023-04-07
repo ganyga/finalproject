@@ -6,7 +6,7 @@ pipeline {
     gitEmail = 'artzana03@gmail.com'
     gitWebaddress = 'https://github.com/ganyga/finalproject.git'
     gitCredential = 'git_cre'
-    dockerHubRegistry = 'nginx/gany'
+    dockerHubRegistry = 'gaeunoo/nginx'
     dockerHubRegistryCredential = 'docker_cre'
   }
 
